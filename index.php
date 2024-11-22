@@ -3,16 +3,14 @@ include("config.php");
 include("reactions.php");
 
 $getReactions = Reactions::getReactions();
-//uncomment de volgende regel om te kijken hoe de array van je reactions eruit ziet
-// echo "<pre>".var_dump($getReactions)."</pre>";
+
 
 if(!empty($_POST)){
 
-    //dit is een voorbeeld array.  Deze waardes moeten erin staan.
     $postArray = [
-        'name' => "Ieniminie",
+        'name' => $_POST['naam'],
         'email' => "ieniminie@sesamstraat.nl",
-        'message' => "Geweldig dit"
+        'message' => $_POST['message']
     ];
 
     $setReaction = Reactions::setReaction($postArray);
@@ -31,12 +29,48 @@ if(!empty($_POST)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube remake</title>
+    
+    <style>
+    #review{
+    width:200px;
+    height:100px;
+    }
+    .bericht{
+    background: grey;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 10px;
+    padding: 10px;
+    margin:10px;
+    }
+    </style>
+
 </head>
 <body>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=twI61ZGDECBr4ums" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/CaYDpyAOo0Q?si=ke2z2QHR-6wwPAts" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        
 
-    <h2>Hieronder komen reacties</h2>
-    <p>Maak hier je eigen pagina van aan de hand van de opdracht</p>
+        <p>Comment achter laten:</p>
+    <form action="" method="post">
+        <input required type="text" placeholder="Je naam: " name="naam">
+        <br>
+        <textarea required id="review" placeholder="Je bericht: " name="message" row="4" cols="50"></textarea>
+        <br>
+        <input type="submit" value="versturen">
+    </form>
+
+
+<?php
+
+echo ("<p>Er zijn ".count($getReactions)." reacties:<p>");
+
+for ($i=0; $i < count($getReactions); $i++) { 
+    echo("<div class='bericht'>");
+    echo($getReactions[$i]['name']." -- ");
+    echo($getReactions[$i]['message']."<br>");
+    echo("</div>");    
+}
+?> 
+
 </body>
 </html>
 
